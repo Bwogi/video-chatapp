@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { copyToClipboard } from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Peer from 'simple-peer';
 import io from 'socket.io-client';
+import Logo from '../images/odelabs-logo.png';
+import { BsFillTelephoneFill } from 'react-icons/bs';
+import { GrCopy } from 'react-icons/gr';
 
 const socket = io.connect('http://localhost:5100');
 
@@ -127,48 +130,61 @@ const Home = () => {
 			</div>
 			{/* end video section  */}
 			{/* form */}
-			<div className=' w-[500px]'>
-				<form className=' space-y-8 divide-y divide-gray-200'>
-					<div className='space-y-8 divide-y divide-gray-200'>
-						<div className='pt-8'>
-							<div>
+			<div className='flex justify-center text-center w-full'>
+				<form className=''>
+					<div className=''>
+						<div className=''>
+							<div className=''>
 								<h3 className='text-lg font-medium leading-6 text-gray-900'>
-									Personal Information
+									Welcome to Secure Video Chats&reg;
 								</h3>
 								<p className='mt-1 text-sm text-gray-500'>
-									Use a permanent address where you can receive mail.
+									Enter your Name and copy the ID to give it to your guest. Let
+									them call you to connect
 								</p>
 							</div>
-							<div className='mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6'>
-								<div className='sm:col-span-3'>
-									<label
-										htmlFor='first-name'
-										className='block text-sm font-medium text-gray-700'
-									>
-										First name
-									</label>
-									<div className='mt-1'>
-										<input
-											type='text'
-											name='first-name'
-											id='first-name'
-											autoComplete='given-name'
-											className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-										/>
-									</div>
+							<div>
+								<input
+									type='text'
+									value={name}
+									onChange={(e) => {
+										setName(e.target.value);
+									}}
+									placeholder='Enter you name...'
+									className='p-2 w-[400px] mt-5'
+								/>
+								<CopyToClipboard text={me}>
+									<button className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-white py-2 px-4 text-sm font-medium text-gray-400 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
+										<span>
+											<GrCopy className='text-white text-xl mr-2' />
+										</span>
+										Copy ID{' '}
+									</button>
+								</CopyToClipboard>
+							</div>
+
+							<div>
+								<input
+									type='text'
+									value={idToCall}
+									onChange={(e) => setIdToCall(e.target.value)}
+									placeholder='Paste host ID here to call them...'
+									className='p-2 w-[400px] mt-5'
+								/>
+							</div>
+							<div className='pt-5 items-center'>
+								<div className='mb-5'>
+									{callAccepted && !callEnded ? (
+										<button className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
+											End Call
+										</button>
+									) : (
+										<span className='flex justify-center'>
+											<BsFillTelephoneFill className='text-green-700 text-5xl' />
+										</span>
+									)}
 								</div>
 							</div>
-						</div>
-					</div>
-
-					<div className='pt-5'>
-						<div>
-							<button
-								type='submit'
-								className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-							>
-								Save
-							</button>
 						</div>
 					</div>
 				</form>

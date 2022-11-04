@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import Logo from '../../images/odelabs-logo.png';
 import Footer from './Footer';
 
 const user = {
@@ -39,7 +40,7 @@ export default function Layout({ children }) {
         ```
       */}
 			<div className='min-h-full'>
-				<Disclosure as='nav' className='bg-indigo-600'>
+				<Disclosure as='nav' className='bg-gray-800'>
 					{({ open }) => (
 						<>
 							<div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
@@ -47,9 +48,9 @@ export default function Layout({ children }) {
 									<div className='flex items-center'>
 										<div className='flex-shrink-0'>
 											<img
-												className='h-8 w-8'
-												src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300'
-												alt='Your Company'
+												className='h-[80px] w-[80px]'
+												src={Logo}
+												alt='Ode Labs'
 											/>
 										</div>
 										<div className='hidden md:block'>
@@ -60,8 +61,8 @@ export default function Layout({ children }) {
 														to={item.href}
 														className={classNames(
 															item.current
-																? 'bg-indigo-700 text-white'
-																: 'text-white hover:bg-indigo-500 hover:bg-opacity-75',
+																? 'bg-gray-800 text-white'
+																: 'text-white hover:bg-gray-500 hover:bg-opacity-75',
 															'px-3 py-2 rounded-md text-sm font-medium'
 														)}
 														aria-current={item.current ? 'page' : undefined}
@@ -76,7 +77,7 @@ export default function Layout({ children }) {
 										<div className='ml-4 flex items-center md:ml-6'>
 											<button
 												type='button'
-												className='rounded-full bg-indigo-600 p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600'
+												className='rounded-full bg-gray-600 p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600'
 											>
 												<span className='sr-only'>View notifications</span>
 												<BellIcon className='h-6 w-6' aria-hidden='true' />
