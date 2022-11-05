@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Peer from 'simple-peer';
 import io from 'socket.io-client';
-import Logo from '../images/odelabs-logo.png';
+// import Logo from '../images/odelabs-logo.png';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { GrCopy } from 'react-icons/gr';
 
@@ -131,63 +131,80 @@ const Home = () => {
 			{/* end video section  */}
 			{/* form */}
 			<div className='flex justify-center text-center w-full'>
-				<form className=''>
+				<div className=''>
 					<div className=''>
 						<div className=''>
-							<div className=''>
-								<h3 className='text-lg font-medium leading-6 text-gray-900'>
-									Welcome to Secure Video Chats&reg;
-								</h3>
-								<p className='mt-1 text-sm text-gray-500'>
-									Enter your Name and copy the ID to give it to your guest. Let
-									them call you to connect
-								</p>
-							</div>
-							<div>
-								<input
-									type='text'
-									value={name}
-									onChange={(e) => {
-										setName(e.target.value);
-									}}
-									placeholder='Enter you name...'
-									className='p-2 w-[400px] mt-5'
-								/>
-								<CopyToClipboard text={me}>
-									<button className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-white py-2 px-4 text-sm font-medium text-gray-400 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-										<span>
-											<GrCopy className='text-white text-xl mr-2' />
-										</span>
-										Copy ID{' '}
-									</button>
-								</CopyToClipboard>
-							</div>
-
-							<div>
-								<input
-									type='text'
-									value={idToCall}
-									onChange={(e) => setIdToCall(e.target.value)}
-									placeholder='Paste host ID here to call them...'
-									className='p-2 w-[400px] mt-5'
-								/>
-							</div>
-							<div className='pt-5 items-center'>
-								<div className='mb-5'>
-									{callAccepted && !callEnded ? (
-										<button className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-											End Call
-										</button>
-									) : (
-										<span className='flex justify-center'>
-											<BsFillTelephoneFill className='text-green-700 text-5xl' />
-										</span>
-									)}
-								</div>
-							</div>
+							<h3 className='text-lg font-medium leading-6 text-gray-900'>
+								Welcome to Secure Video Chats&reg;
+							</h3>
+							<p className='mt-1 text-sm text-gray-500'>
+								Enter your Name and copy the ID to give it to your guest. Let
+								them call you to connect
+							</p>
+						</div>
+						<div>
+							<input
+								type='text'
+								value={name}
+								name='name'
+								onChange={(e) => {
+									setName(e.target.value);
+								}}
+								placeholder='Enter you name...'
+								className='p-2 w-[400px] mt-5'
+							/>
+							<CopyToClipboard text={me}>
+								<button className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-white py-2 px-4 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'>
+									<GrCopy className='text-white text-xl mr-2' />
+									Copy ID
+								</button>
+							</CopyToClipboard>
+						</div>
+						{/* new */}
+						<div className='mb-5'>
+							<input
+								type='text'
+								value={idToCall}
+								name='idToCall'
+								onChange={(e) => setIdToCall(e.target.value)}
+								placeholder='Paste host ID here to call them...'
+								className='p-2 w-[400px] mt-5'
+							/>
+							{callAccepted && !callEnded ? (
+								<button
+									className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-white py-2 px-4 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
+									onClick={leaveCall}
+								>
+									<BsFillTelephoneFill className='text-red-700 text-2xl mr-4' />
+									End Call
+								</button>
+							) : (
+								<button
+									className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-white py-2 px-4 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
+									onClick={() => callUser(idToCall)}
+								>
+									<BsFillTelephoneFill className='text-indigo-700 text-2xl mr-4' />
+									Make a Call
+								</button>
+							)}
+							{idToCall}
 						</div>
 					</div>
-				</form>
+					<div>
+						{receivingCall && !callAccepted ? (
+							<div>
+								<h1>{name} is calling...</h1>
+								<button
+									className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-white py-2 px-4 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
+									onClick={answerCall}
+								>
+									<BsFillTelephoneFill className='text-green-700 text-2xl mr-4' />
+									Answer
+								</button>
+							</div>
+						) : null}
+					</div>
+				</div>
 			</div>
 
 			{/* end form */}
